@@ -1,0 +1,66 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %} {{ title }} :: {{ block.super}} {% endblock %}
+
+{% block content %}
+<section class="bg-text-area">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="bg-text">
+                    <h3>Wonderful World</h3>
+                    <p>A global blog that includes many areas of life, religions and just a great way to learn a little
+                        about everything</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<section class="blog-post-area">
+    <div class="container">
+        <div class="row">
+            <div class="blog-post-area-style">
+                <div class="col-md-12">
+                    <div class="single-post-big">
+                        <div class="big-image">
+                            <img src="{% static 'img/post-image1.jpg' %}" alt="">
+                        </div>
+                        <div class="big-text">
+                            <h3><a href="#">Post Title Goes Here.</a></h3>
+                            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor
+                                incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud
+                                exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+                            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor
+                                incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam.eiusmod tempor
+                                incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam.</p>
+                            <h4><span class="date">25 February 2017</span><span class="author">Posted By: <span
+                                    class="author-name">Kabbo Liate</span></span>
+                            </h4>
+                        </div>
+                    </div>
+                </div>
+
+                {% for post in posts %}
+                <div class="col-md-3">
+                    <div class="single-post">
+                        {% if post.photo%}
+                        <img class="mr-3" src=" {{ post.photo.url }}" alt="{{ post.title }}">
+                        {% else%}
+                        <img class="mr-3" src="https://picsum.photos/seed/picsum/300/201" alt="{{ post.title }}">
+                        {% endif %}
+                        <h3><a href="{{ post.get_absolute_url }}">{{ post.title }}</a></h3>
+                        <h4><span>Posted By: <span class="author-name">{{ post.author }}</span></span>
+                        </h4><p>{{post.content|truncatewords_html:22|safe}}</p>
+                        <h4><span>{{post.created_at|date:"d.m.Y"}}</span></h4>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+
+
+{% include 'inc/_pagination.html' %}
+
+</section>
+{% endblock %}
